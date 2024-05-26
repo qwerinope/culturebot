@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction, CacheType } from "discord.js";
 import { API, Book, Tag } from "nhentai-api";
-import { addCountToDb } from "../lib/sequelize";
+import { addCountToDb } from "../lib/sequelize.js";
 
 const api = new API();
 
