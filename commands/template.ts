@@ -2,10 +2,10 @@ import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction, CacheTy
 
 export const data = new SlashCommandBuilder()
 
-export async function execute(interaction:ChatInputCommandInteraction<CacheType>) {
+export async function execute(interaction: ChatInputCommandInteraction<CacheType>) {
 
     const embed = new EmbedBuilder()
         .setColor(0xED2553)
-    
-    return interaction.editReply({embeds: [embed]})
+
+    return interaction.editReply({ embeds: [embed] })
 }

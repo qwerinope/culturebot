@@ -2,7 +2,7 @@
 
 This bot is NSFW. You've been warned.
 
-This bot returns an instance of *'culture'* from [a database of wholesome pieces of *'culture'*](https://wholesomelist.com). There is a plan for unwholesome *'culture'* but that is currently unimplemented (see [#2](https://github.com/qweri0p/culturebot/issues/2)).
+This bot returns an instance of *'culture'* from [a database of wholesome pieces of *'culture'*](https://wholesomelist.com).
 
 Invite it using [this link](https://discord.com/api/oauth2/authorize?client_id=1177354553956511764&permissions=0&scope=bot) or self host it.
 
