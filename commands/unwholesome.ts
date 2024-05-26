@@ -1,5 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder, ChatInputCommandInteraction, CacheType } from "discord.js";
 import { API, Book, Tag } from "nhentai-api";
+import { addCountToDb } from "../lib/sequelize";
 
 const api = new API();
 
@@ -99,12 +100,14 @@ export async function execute(interaction: ChatInputCommandInteraction<CacheType
         case 'random':
             const randomCulture = await api.getRandomBook()
             buildDefaultEmbed(embed, randomCulture)
+            addCountToDb(interaction)
             break;
         case 'lookup':
             const selectedid = interaction.options.getNumber('code')!
             try {
                 const selectedCulture = await api.getBook(selectedid)
                 buildDefaultEmbed(embed, selectedCulture)
+                addCountToDb(interaction)
             } catch {
                 embed.setTitle(`'${selectedid.toString()}' doesn't exist ):`)
             }
@@ -121,6 +124,7 @@ export async function execute(interaction: ChatInputCommandInteraction<CacheType
             }
             const selectedbook = searchresult.books[Math.floor(Math.random() * searchresult.books.length)]
             buildDefaultEmbed(embed, selectedbook)
+            addCountToDb(interaction)
             break;
         default:
             embed.setTitle("nah")
