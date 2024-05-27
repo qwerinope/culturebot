@@ -63,6 +63,7 @@ const buildDefaultEmbed = (embed: EmbedBuilder, culture: Book) => {
 
 export const data = new SlashCommandBuilder()
     .setName('unwholesome')
+    .setNSFW()
     .setDescription('Unwholesome culture commands.')
     .addSubcommand(subcommand =>
         subcommand.setName('random')
