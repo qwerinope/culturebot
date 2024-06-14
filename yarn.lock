@@ -284,6 +284,11 @@ named-placeholders@^1.1.3:
   dependencies:
     lru-cache "^7.14.1"
 
+nhentai-api@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/nhentai-api/-/nhentai-api-3.4.3.tgz#65040e42b61ac049986af1b69752b5b8c1a2c60f"
+  integrity sha512-IPzoB9/GRVF/wofyao6SfpFIak2GyE8+4F7ipDJXK/vmxV3QPa+7E7+cst2zsXis5j9Yxk3Cf/zodktaM9UU9w==
+
 pg-connection-string@^2.6.1:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/pg-connection-string/-/pg-connection-string-2.6.2.tgz#713d82053de4e2bd166fab70cd4f26ad36aab475"
