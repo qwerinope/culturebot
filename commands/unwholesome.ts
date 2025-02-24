@@ -10,8 +10,8 @@ const formatTags = (tags: Tag[]) => {
 
 const buildDefaultEmbed = (embed: EmbedBuilder, culture: Book) => {
     embed.setTitle(culture.title.pretty.toString())
-    embed.setDescription(culture.id.toString())
-        .setThumbnail(api.getImageURL(culture.cover))
+        .setDescription(culture.id.toString())
+        .setThumbnail(api.getImageURL(culture.cover).replace('t.nhentai.net', 't2.nhentai.net'))
         .addFields(
             {
                 name: 'Pages',

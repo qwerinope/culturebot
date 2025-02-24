@@ -36,7 +36,7 @@ const GuildModel = sequelize.define('guild', {
     }
 })
 
-const UserModel = sequelize.define('user',{
+const UserModel = sequelize.define('user', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -55,11 +55,11 @@ const UserModel = sequelize.define('user',{
 })
 
 //Create database tables
-export async function setupDB(client:Client) {
+export async function setupDB(client: Client) {
     GuildModel.sync()
     UserModel.sync()
     const guilds = client.guilds.cache.map((guild) => guild.id)
-    const existingGuildsData = guilds.map((guild) => ({guildId:guild}))
+    const existingGuildsData = guilds.map((guild) => ({ guildId: guild }))
 
     await GuildModel.bulkCreate(existingGuildsData, { ignoreDuplicates: true })
     console.log('Succesfully put all data about guilds in database.')
@@ -67,14 +67,14 @@ export async function setupDB(client:Client) {
 
 // Run this when the bot is added to a guild
 // Create a new entry into the database with the guild's ID as guildId
-export async function addGuildToDb(guild:Guild) {
-    const guildData = ({guildId:guild.id})
-    await GuildModel.create(guildData, {ignoreDuplicates: true})
+export async function addGuildToDb(guild: Guild) {
+    const guildData = ({ guildId: guild.id })
+    await GuildModel.create(guildData, { ignoreDuplicates: true })
 }
 
 // Run this when the bot is removed from a guild
 // Delete all data associated with the guild
-export async function removeGuildFromDb(guild:Guild) {
+export async function removeGuildFromDb(guild: Guild) {
     const tobedeleted = await GuildModel.findOne({
         where: {
             guildId: guild.id
@@ -87,15 +87,15 @@ export async function removeGuildFromDb(guild:Guild) {
 }
 
 // Add 1 to both the guild and the user's 'requestCount''
-export async function addCountToDb(interaction:Interaction) {
+export async function addCountToDb(interaction: Interaction) {
     const [user] = await UserModel.findOrCreate({
         where: { userId: interaction.user.id },
         defaults: { userId: interaction.user.id }
     });
 
-    await user.update({requestCount: await user.get('requestCount') as number +1})
+    await user.update({ requestCount: await user.get('requestCount') as number + 1 })
     const guildEntry = await GuildModel.findOne({ where: { guildId: interaction.guildId } })
-    await guildEntry?.update({requestCount: await guildEntry.get('requestCount') as number +1})
+    await guildEntry?.update({ requestCount: await guildEntry.get('requestCount') as number + 1 })
 }
 
 // Get an array of guild Objects with the ID and the basedness
@@ -111,7 +111,7 @@ export async function getGuildsFromDatabase() {
 }
 
 // Boolean: Is this guild with guildId x based
-export async function isGuildBased(guildId:string):Promise<any> {
+export async function isGuildBased(guildId: string): Promise<any> {
     const basedness = await GuildModel.findOne({
         where: {
             guildId: guildId
@@ -121,7 +121,7 @@ export async function isGuildBased(guildId:string):Promise<any> {
 }
 
 // Number: How much culture has been searched for by the members of the guild
-export async function getGuildUsageCount(guildId:any):Promise<any> {
+export async function getGuildUsageCount(guildId: any): Promise<any> {
     const cultureCount = await GuildModel.findOne({
         where: {
             guildId: guildId
@@ -131,11 +131,23 @@ export async function getGuildUsageCount(guildId:any):Promise<any> {
 }
 
 // Number: How much culture has been searched for by the user with userId x
-export async function getUserUsageCount(userId:string):Promise<any> {
+export async function getUserUsageCount(userId: string): Promise<any> {
     const cultureCount = await UserModel.findOne({
         where: {
             userId: userId
         }
     })
     return cultureCount?.get('requestCount')
+}
+
+export async function changeBasedNess(guildId: string, newBasedNess: boolean): Promise<any> {
+    const current = await isGuildBased(guildId)
+    if (current === newBasedNess) return
+
+    const guild = await GuildModel.findOne({
+        where: {
+            guildId: guildId
+        }
+    })
+    await guild?.update({ isBased: newBasedNess })
 }

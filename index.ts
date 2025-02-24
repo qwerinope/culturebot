@@ -6,12 +6,12 @@ import url from 'node:url'
 import { addGuildToDb, removeGuildFromDb, setupDB } from './lib/sequelize.js';
 
 //Load the login details
-const token = process.env.TOKEN
-const client_id = process.env.CLIENT_ID
+export const token = process.env.TOKEN
+export const client_id = process.env.CLIENT_ID
 
 //Check if the details are there. If not, close.
-if (!token) {console.error('Please provide a discord bot token in the environment variable "TOKEN".'); process.exit()}
-if (!client_id) {console.error('Please provide the discord client_id from the same application as the bot in the environment variable "CLIENT_ID".'); process.exit()}
+if (!token) { console.error('Please provide a discord bot token in the environment variable "TOKEN".'); process.exit() }
+if (!client_id) { console.error('Please provide the discord client_id from the same application as the bot in the environment variable "CLIENT_ID".'); process.exit() }
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -35,12 +35,12 @@ client.once(Events.ClientReady, async c => {
 	await initialRegister(token, client_id) //actually register the commands
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 
-	setInterval(async () =>{
+	setInterval(async () => {
 		let dothething = true
 		while (dothething) {
 			const request = await fetch('https://wholesomelist.com/api/random')
 			const culture = await request.json()
-			const item:any = culture.entry
+			const item: any = culture.entry
 			if (item.nh !== null) {
 				c.user.setActivity(/\d+/.exec(item.nh)!.toString(), { type: ActivityType.Watching })
 				dothething = false
@@ -65,7 +65,7 @@ client.on(Events.InteractionCreate, async interaction => {
 			await command.execute(interaction);
 		} catch (error) {
 			console.error(error);
-			await interaction.editReply({ content: 'There was an error while executing this command!'});
+			await interaction.editReply({ content: 'There was an error while executing this command!' });
 		}
 	}
 
@@ -85,12 +85,12 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 });
 
-client.on(Events.GuildCreate, async guild =>{
+client.on(Events.GuildCreate, async guild => {
 	await addGuildToDb(guild)
 	await registerGuildCommands(guild.id, token, client_id)
 });
 
-client.on(Events.GuildDelete, async guild =>{
+client.on(Events.GuildDelete, async guild => {
 	await removeGuildFromDb(guild)
 });
 
