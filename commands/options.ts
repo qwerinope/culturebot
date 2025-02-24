@@ -24,7 +24,6 @@ export async function execute(interaction: ChatInputCommandInteraction<CacheType
     const embed = new EmbedBuilder()
         .setColor(0xED2553)
         .setTitle(isBased ? "Unwholesome content now allowed" : "Unwholesome content now disallowed")
-        .setTitle("Unwholesome content now " + isBased ? "allowed" : "disallowed")
         .setDescription("The /unwholesome command is now " + isBased ? "available" : "unavailable" + ".")
 
     await changeBasedNess(guildId, isBased)
