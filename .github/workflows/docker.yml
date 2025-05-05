@@ -21,7 +21,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/qweri0p/culturebot
+          images: ghcr.io/qwerinope/culturebot
       -
         name: Build and push
         uses: docker/build-push-action@v5
